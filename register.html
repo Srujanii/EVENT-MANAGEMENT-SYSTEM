@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Register – Christ Events</title>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&family=Playfair+Display:ital,wght@0,700;1,400&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#06102b;--surface:rgba(255,255,255,.04);--border:rgba(255,255,255,.09);--gold:#f5a623;--blue:#3b82f6;--violet:#818cf8;--text:#e8eaf6;--muted:#7986a8}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg);color:var(--text);font-family:'Outfit',sans-serif;min-height:100vh}
+body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellipse 70% 50% at 20% 0%,rgba(59,130,246,.18),transparent 55%),radial-gradient(ellipse 50% 60% at 80% 90%,rgba(129,140,248,.14),transparent 55%);pointer-events:none;z-index:0}
+nav{position:fixed;inset:0 0 auto;z-index:100;display:flex;justify-content:space-between;align-items:center;padding:1.2rem 3rem;background:rgba(6,16,43,.7);backdrop-filter:blur(16px);border-bottom:1px solid var(--border)}
+.logo{font-family:'Playfair Display',serif;font-size:1.3rem;color:#fff;text-decoration:none}.logo span{color:var(--gold)}
+.back{font-size:.8rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);text-decoration:none;transition:color .2s}.back:hover{color:var(--gold)}
+.page{display:grid;grid-template-columns:1fr 1fr;min-height:100vh;position:relative;z-index:1}
+
+/* Left panel */
+.left{display:flex;flex-direction:column;justify-content:center;padding:7rem 4rem;border-right:1px solid var(--border);position:relative;overflow:hidden}
+.left::before{content:'';position:absolute;top:10%;left:-20%;width:400px;height:400px;background:radial-gradient(circle,rgba(59,130,246,.15),transparent 65%);pointer-events:none}
+.left-tag{display:inline-flex;align-items:center;gap:.5rem;font-size:.7rem;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);background:rgba(245,166,35,.1);border:1px solid rgba(245,166,35,.2);padding:.35rem .8rem;border-radius:20px;margin-bottom:1.5rem;width:fit-content}
+.left h1{font-family:'Playfair Display',serif;font-size:clamp(2rem,4vw,3.2rem);line-height:1.1;margin-bottom:.8rem}
+.left h1 em{font-style:italic;color:var(--gold)}
+.ev-info{margin-top:2rem;display:flex;flex-direction:column;gap:.8rem}
+.info-card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:1rem 1.2rem;display:flex;align-items:center;gap:.8rem;font-size:.88rem}
+.info-card .ic{font-size:1.1rem}
+.info-card .il{color:var(--muted);font-size:.72rem;text-transform:uppercase;letter-spacing:.1em}
+.info-card .iv{color:var(--text);font-weight:600;font-size:.9rem}
+
+/* Right panel / form */
+.right{display:flex;align-items:center;justify-content:center;padding:7rem 4rem}
+.fw{width:100%;max-width:420px}
+.form-title{font-family:'Playfair Display',serif;font-size:1.8rem;margin-bottom:.4rem}
+.form-sub{font-size:.85rem;color:var(--muted);margin-bottom:2rem;padding-bottom:2rem;border-bottom:1px solid var(--border)}
+.fg{margin-bottom:1.4rem}
+label{display:block;font-size:.68rem;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);margin-bottom:.5rem}
+input{width:100%;background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:.75rem 1rem;color:var(--text);font-family:'Outfit',sans-serif;font-size:.9rem;outline:none;transition:border-color .2s,box-shadow .2s}
+input:focus{border-color:var(--blue);box-shadow:0 0 0 3px rgba(59,130,246,.1)}
+input::placeholder{color:var(--muted)}
+.btn-sub{width:100%;padding:1rem;background:linear-gradient(135deg,var(--blue),var(--violet));color:#fff;font-family:'Outfit',sans-serif;font-size:.95rem;font-weight:700;border:none;border-radius:10px;cursor:pointer;transition:transform .2s,box-shadow .2s;letter-spacing:.05em}
+.btn-sub:hover{transform:translateY(-2px);box-shadow:0 8px 30px rgba(59,130,246,.4)}
+.btn-sub:disabled{opacity:.6;transform:none}
+#msg{margin-top:1rem;padding:.8rem 1rem;border-radius:8px;font-size:.85rem;display:none}
+#msg.ok{background:rgba(34,197,94,.1);border:1px solid rgba(34,197,94,.25);color:#4ade80}
+#msg.err{background:rgba(239,68,68,.1);border:1px solid rgba(239,68,68,.25);color:#f87171}
+
+.pay-opts{display:grid;grid-template-columns:1fr 1fr;gap:.8rem}
+.pay-opt{cursor:pointer}
+.pay-opt input{display:none}
+.pay-opt span{display:flex;align-items:center;gap:.6rem;padding:.75rem 1rem;border:1px solid var(--border);border-radius:10px;font-size:.88rem;font-weight:600;color:var(--muted);background:var(--surface);transition:all .2s;cursor:pointer}
+.pay-opt input:checked+span{border-color:var(--blue);color:var(--text);background:rgba(59,130,246,.1);box-shadow:0 0 0 2px rgba(59,130,246,.15)}
+.pay-opt span svg{flex-shrink:0}
+.pay-details{animation:fadeIn .3s ease}
+.fee-box{display:flex;justify-content:space-between;align-items:center;padding:1rem 1.2rem;background:rgba(245,166,35,.08);border:1px solid rgba(245,166,35,.2);border-radius:10px;margin-bottom:1.4rem;font-size:.9rem}
+.fee-box span{color:var(--muted)}
+.fee-box strong{color:var(--gold);font-size:1.2rem}
+@keyframes fadeIn{from{opacity:0;transform:translateY(-6px)}to{opacity:1;transform:none}}
+@media(max-width:900px){.page{grid-template-columns:1fr}.left{display:none}nav{padding:1rem 1.5rem}.right{padding:6rem 1.5rem}}
+</style>
+</head>
+<body>
+<nav>
+  <a class="logo" href="index.html">Christ <span>Events</span></a>
+  <a href="index.html" class="back">← Back to Events</a>
+</nav>
+<div class="page">
+  <div class="left">
+    <div class="left-tag">✦ Christ University 2026</div>
+    <h1>Claim<br>Your <em>Spot</em></h1>
+    <p style="color:var(--muted);font-size:.9rem;margin-top:.8rem">Fill in your details and secure your registration in seconds.</p>
+    <div class="ev-info" id="evInfo"></div>
+  </div>
+  <div class="right">
+    <div class="fw">
+      <h2 class="form-title">Register Now</h2>
+      <p class="form-sub" id="formSub">Complete the form below</p>
+      <form id="regForm">
+        <div class="fg"><label>Full Name *</label><input type="text" id="name" placeholder="Jane Doe" required></div>
+        <div class="fg"><label>Email Address *</label><input type="email" id="email" placeholder="jane@example.com" required></div>
+        <div class="fg"><label>Phone Number *</label><input type="tel" id="phone" placeholder="+91 98765 43210" required></div>
+        <div class="fg"><label>College / Institution</label><input type="text" id="college" placeholder="Christ University"></div>
+        <div class="fg">
+          <label>Payment Method *</label>
+          <div class="pay-opts">
+            <label class="pay-opt"><input type="radio" name="paymethod" value="upi" checked><span><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M8 12l4-4 4 4M12 8v8"/></svg>UPI</span></label>
+            <label class="pay-opt"><input type="radio" name="paymethod" value="card"><span><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg>Card</span></label>
+          </div>
+        </div>
+        <div class="pay-details" id="upiFields">
+          <div class="fg"><label>UPI ID *</label><input type="text" id="upiId" placeholder="yourname@upi"></div>
+        </div>
+        <div class="pay-details" id="cardFields" style="display:none">
+          <div class="fg"><label>Card Number *</label><input type="text" id="cardNum" placeholder="1234 5678 9012 3456" maxlength="19"></div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem">
+            <div class="fg"><label>Expiry *</label><input type="text" id="cardExp" placeholder="MM/YY" maxlength="5"></div>
+            <div class="fg"><label>CVV *</label><input type="text" id="cardCvv" placeholder="123" maxlength="3"></div>
+          </div>
+        </div>
+        <div class="fee-box"><span>Entry Fee</span><strong>₹200</strong></div>
+        <input type="hidden" id="eventId">
+        <button type="submit" class="btn-sub">Pay ₹200 & Register →</button>
+      </form>
+      <div id="msg"></div>
+    </div>
+  </div>
+</div>
+<script>
+const p=new URLSearchParams(location.search);
+const eid=p.get('eventId')||'',en=decodeURIComponent(p.get('eventName')||''),ed=p.get('eventDate')||'',et=decodeURIComponent(p.get('time')||''),ev=decodeURIComponent(p.get('venue')||'');
+document.getElementById('eventId').value=eid;
+if(en){
+  document.getElementById('formSub').textContent='Registering for: '+en;
+  document.getElementById('evInfo').innerHTML=[
+    en?`<div class="info-card"><span class="ic">🎯</span><div><div class="il">Event</div><div class="iv">${en}</div></div></div>`:'',
+    ed?`<div class="info-card"><span class="ic">📅</span><div><div class="il">Date</div><div class="iv">${ed}</div></div></div>`:'',
+    et?`<div class="info-card"><span class="ic">⏰</span><div><div class="il">Time</div><div class="iv">${et}</div></div></div>`:'',
+    ev?`<div class="info-card"><span class="ic">📍</span><div><div class="il">Venue</div><div class="iv">${ev}</div></div></div>`:''
+  ].join('');
+}
+document.getElementById('regForm').addEventListener('submit',async function(e){
+  e.preventDefault();
+  const msg=document.getElementById('msg'),btn=this.querySelector('.btn-sub');
+  msg.style.display='none';
+  const pm=document.querySelector('input[name=paymethod]:checked').value;
+  // Validate payment fields before submitting
+  if(pm==='upi'){
+    const upi=document.getElementById('upiId').value.trim();
+    if(!upi||!/^[\w.\-]+@[\w]+$/.test(upi)){
+      msg.style.display='block';msg.className='err';msg.textContent='Error: Please enter a valid UPI ID (e.g. name@upi)';return;
+    }
+  }
+  if(pm==='card'){
+    const cn=document.getElementById('cardNum').value.replace(/\s/g,'');
+    const ex=document.getElementById('cardExp').value.trim();
+    const cv=document.getElementById('cardCvv').value.trim();
+    if(cn.length<15||cn.length>16||!/^\d+$/.test(cn)){msg.style.display='block';msg.className='err';msg.textContent='Error: Invalid card number';return;}
+    if(!/^\d{2}\/\d{2}$/.test(ex)){msg.style.display='block';msg.className='err';msg.textContent='Error: Invalid expiry (MM/YY)';return;}
+    if(!/^\d{3,4}$/.test(cv)){msg.style.display='block';msg.className='err';msg.textContent='Error: Invalid CVV';return;}
+  }
+  btn.textContent='Registering…';btn.disabled=true;
+  const fd=new FormData();
+  ['participant_name|name','email|email','phone|phone','college|college'].forEach(s=>{const[k,id]=s.split('|');fd.append(k,document.getElementById(id).value);});
+  fd.append('event_id',eid);fd.append('amount',200);fd.append('payment_method',pm);
+  try{
+    const r=await fetch('admin.php',{method:'POST',body:fd});
+    const t=await r.text();
+    msg.style.display='block';
+    if(t.startsWith('Error')){msg.className='err';msg.textContent=t;}
+    else{msg.className='ok';msg.textContent=t;this.reset();}
+  }catch{msg.style.display='block';msg.className='err';msg.textContent='Network error. Try again.';}
+  btn.textContent='Pay ₹200 & Register →';btn.disabled=false;
+});
+
+// Toggle UPI/Card fields
+document.querySelectorAll('input[name=paymethod]').forEach(r=>r.addEventListener('change',function(){
+  document.getElementById('upiFields').style.display=this.value==='upi'?'block':'none';
+  document.getElementById('cardFields').style.display=this.value==='card'?'block':'none';
+}));
+
+// Card number formatting
+const cn=document.getElementById('cardNum');
+if(cn)cn.addEventListener('input',function(){this.value=this.value.replace(/\D/g,'').replace(/(.{4})/g,'$1 ').trim();});
+const ce=document.getElementById('cardExp');
+if(ce)ce.addEventListener('input',function(){this.value=this.value.replace(/\D/g,'').replace(/^(\d{2})(\d)/,'$1/$2');});
+</script>
+</body>
+</html>
